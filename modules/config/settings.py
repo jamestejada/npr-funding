@@ -8,6 +8,8 @@ from datetime import datetime
 ENV_PATH = Path.cwd().joinpath('modules', 'config', '.env')
 load_dotenv(dotenv_path=ENV_PATH)
 
+SLACK_TOKEN = os.getenv('SLACK_TOKEN')
+
 
 def check_flags(flags) -> bool:
     for arg in flags:
@@ -16,11 +18,11 @@ def check_flags(flags) -> bool:
     return False
 
 
-SLACK_TOKEN = os.getenv('SLACK_TOKEN')
-
+# Command Line Switches
 TESTING = check_flags(['testing', 'test'])
 BOT_RUN = check_flags(['bot', 'app'])
 
+# File Paths
 TEST_DATA = Path.cwd().joinpath('tests', 'data')
 TRUE_DATA = Path.cwd().joinpath('data')
 DATA = TEST_DATA if TESTING else TRUE_DATA
@@ -30,6 +32,11 @@ NEWSCAST_FILE = DATA.joinpath('newscast.xls')
 now = datetime.now().strftime('%Y%m%d')
 OUTPUT_FILE = DATA.joinpath(f'output{now}.xlsx')
 
+DOWNLOAD_FOLDER = Path('C:\\Users\\james.tejada\\Downloads')
+DOWNLOAD_PATH_NEWS = DOWNLOAD_FOLDER.joinpath('news.xls')
+DOWNLOAD_PATH_NEWSCAST = DOWNLOAD_FOLDER.joinpath('newscast.xls')
+
+# For Google Sheets API
 TARGET_SHEET = os.getenv('TEST_ID' if TESTING else 'SPREADSHEET_ID')
 CRED_PATH = Path.cwd().joinpath('modules', 'config', 'credentials.json')
 TOKEN_PATH = Path.cwd().joinpath('modules', 'config', 'token.pickle')
@@ -40,6 +47,3 @@ PASSWORD = os.getenv('PASSWORD')
 LOGIN_PAGE = os.getenv('LOGIN_PAGE')
 CREDIT_PAGE = os.getenv('CREDIT_PAGE')
 
-DOWNLOAD_FOLDER = Path('C:\\Users\\james.tejada\\Downloads')
-DOWNLOAD_PATH_NEWS = DOWNLOAD_FOLDER.joinpath('news.xls')
-DOWNLOAD_PATH_NEWSCAST = DOWNLOAD_FOLDER.joinpath('newscast.xls')

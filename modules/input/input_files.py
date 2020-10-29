@@ -76,7 +76,7 @@ def download_one(helium_driver, link_href, link_text):
 
     while not local_path.exists():
         time.sleep(1)
-    
+
     print(f'{link_text} file downloaded...')
 
     return local_path

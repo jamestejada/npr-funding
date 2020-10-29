@@ -70,7 +70,6 @@ class Funding_Credit_Excel:
         worksheet.write(11, self.legend_column, 'Newscasts', format_green)
         worksheet.write(12, self.legend_column, 'Insight', format_yellow)
 
-
     def format_highlights(self, worksheet, workbook):
         format_green = workbook.add_format({'bg_color': '#A9D08E', **self.highlight_format})
         format_yellow = workbook.add_format({'bg_color': '#FFFF99', **self.highlight_format})
@@ -91,19 +90,14 @@ class Funding_Credit_Excel:
             else:
                 for i in range(self.max_col):
                     worksheet.write(row_number, i, self.dataframe.iloc[index, i], format_normal)
-
     
     def set_column_widths(self, worksheet):
-
         # Time Column (thinner)
         worksheet.set_column(0, 8)
-
         # Source Column (thinner)
         worksheet.set_column((self.max_col - 1), 8)
-
         # Standard columns with cut numbers
         worksheet.set_column(1, (self.max_col - 2), self.COLUMN_WIDTH)
-
         # Legend Column
         worksheet.set_column(self.legend_column, self.legend_column, self.COLUMN_WIDTH)
     
@@ -140,7 +134,6 @@ class Funding_Credit_Output(Funding_Credit_Excel):
         self.week_of = self.get_first_date()
 
     def write_to_google_sheets(self):
-
         self.update_sheet_name()
 
         return self.sheet.values().update(
@@ -167,8 +160,9 @@ class Funding_Credit_Output(Funding_Credit_Excel):
 
     def get_first_date(self):
         first_datetime = parse(self.dataframe.columns.to_list()[1])
-        # return first_datetime.strftime('%-m/%-d/%y') #Linux
+
         return first_datetime.strftime('%#m/%#d/%y')
+        # return first_datetime.strftime('%-m/%-d/%y') #Linux
 
     def build_row_list(self):
         row_list = [self.blank_row for _ in range(self.ROW_OFFSET - 2)] # Add blank rows
