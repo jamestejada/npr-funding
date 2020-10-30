@@ -113,8 +113,8 @@ def clean_header_list(raw_header_list: list) -> list:
 def time_convert_whole_day(sched_dict, datetime_header, time_coumn_header='Times (ET)'):
     out_dict = {}
     for times_et, cut_id in zip(sched_dict.get(time_coumn_header), sched_dict.get(datetime_header)):
-        converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime('%#H:%M')
         # converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime('%-H:%M') # Linux
+        converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime('%#H:%M')
         if converted_pacific_str in regular_funding_credits:
             out_dict[converted_pacific_str] = convert_cut_id_to_cut_number(cut_id)
     return out_dict
@@ -211,5 +211,5 @@ def to_pacific_time_newscasts(eastern_time):
     # convert eastern to pacific time
     return EASTERN_TIMEZONE.localize(
             converted_eastern_datetime, is_dst=None
+        # ).astimezone(PACIFIC_TIMEZONE).strftime('%-H:%M') # LInux version
         ).astimezone(PACIFIC_TIMEZONE).strftime('%#H:%M')
-        # ).astimezone(PACIFIC_TIMEZONE).strftime('%-H:%M') # Linux

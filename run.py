@@ -1,4 +1,5 @@
 #! /bin/env python3
+import pytest
 from modules.output.bot import run_bot
 from modules.output.write import write
 from modules.input.input_files import download_input_files
@@ -11,7 +12,9 @@ def normal_run():
 
 
 def main():
-    if BOT_RUN:
+    if TESTING:
+        pytest.main()
+    elif BOT_RUN:
         run_bot()
     else:
         normal_run()
