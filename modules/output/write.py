@@ -14,3 +14,4 @@ def write():
         # if not write_to.lower().strip() == 'sheets':
     print('Writing to Google Sheets...')
     output_df.write_to_google_sheets()
+    return

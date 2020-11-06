@@ -58,7 +58,7 @@ class Ops_Bot:
         for func in self.external_functions:
             func()
     
-    def _send_task_confirmation(self):
+    def _send_task_confirmation(self, data):
         user = data.get('user')
         channel = data.get('channel')
         confirmation_string = f"Hi <@{user}>!\nNPR Funding Credit Schedule is updated."
@@ -75,7 +75,7 @@ class Ops_Bot:
 
     # @RTMClient.run_on(event='message')
     def _message_handler(self, **payload):
-        print(payload)
+
         data = payload.get('data')
         raw_message_text = data.get('text')
 

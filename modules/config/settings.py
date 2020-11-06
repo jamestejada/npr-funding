@@ -18,7 +18,7 @@ def check_flags(flags) -> bool:
 
 SLACK_TOKEN = os.getenv('SLACK_TOKEN')
 
-TESTING = check_flags(['testing', 'test'])
+TESTING = check_flags(['testing', 'test', 'tests'])
 BOT_RUN = check_flags(['bot', 'app'])
 
 TEST_DATA = Path.cwd().joinpath('tests', 'data')
@@ -43,3 +43,35 @@ CREDIT_PAGE = os.getenv('CREDIT_PAGE')
 DOWNLOAD_FOLDER = Path('C:\\Users\\james.tejada\\Downloads')
 DOWNLOAD_PATH_NEWS = DOWNLOAD_FOLDER.joinpath('news.xls')
 DOWNLOAD_PATH_NEWSCAST = DOWNLOAD_FOLDER.joinpath('newscast.xls')
+
+
+REGULAR_FUNDING_CREDITS = [
+    '4:45',
+    '5:21', '5:34', '5:45',
+    '6:21', '6:34', '6:45',
+    '7:21', '7:34', '7:45',
+    '8:21', '8:34', '8:45',
+    '15:35', '15:58',
+    '16:20', '16:35', '16:58',
+    '17:20', '17:35', '17:58',
+    '18:20'
+]
+
+NEWSCAST_FUNDING_CREDITS = [
+    '5:05', '6:05', '7:05',
+    '8:05', '9:05', '14:05', 
+    '15:05', '16:05', '17:05', '18:05'
+]
+
+FULL_SORTED_LIST = [
+    '4:45',
+    '5:05', '5:21', '5:34', '5:45',
+    '6:05', '6:21', '6:34', '6:45',
+    '7:05', '7:21', '7:34', '7:45',
+    '8:05', '8:21', '8:34', '8:45',
+    '9:05', '14:05', 
+    '15:05', '15:35', '15:58',
+    '16:05', '16:20', '16:35', '16:58',
+    '17:05', '17:20', '17:35', '17:58',
+    '18:05', '18:20'
+]
