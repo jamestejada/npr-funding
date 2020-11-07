@@ -3,43 +3,14 @@ import pandas as pd
 from dateutil.parser import parse
 from dateutil.parser._parser import ParserError
 from modules.processing.cut_converter import get_id_cut_number_converter
-from modules.config.settings import NEWS_FILE
+from modules.config.settings import (
+    NEWS_FILE, REGULAR_FUNDING_CREDITS, NEWSCAST_FUNDING_CREDITS, FULL_SORTED_LIST
+    )
 
-
-regular_funding_credits = [
-    '4:45',
-    '5:21', '5:34', '5:45',
-    '6:21', '6:34', '6:45',
-    '7:21', '7:34', '7:45',
-    '8:21', '8:34', '8:45',
-    '15:35', '15:58',
-    '16:20', '16:35', '16:58',
-    '17:20', '17:35', '17:58',
-    '18:20'
-]
-
-newscast_funding_credits = [
-    '5:05', '6:05', '7:05',
-    '8:05', '9:05', '14:05', 
-    '15:05', '16:05', '17:05', '18:05'
-]
-
-full_sorted_list = [
-    '4:45',
-    '5:05', '5:21', '5:34', '5:45',
-    '6:05', '6:21', '6:34', '6:45',
-    '7:05', '7:21', '7:34', '7:45',
-    '8:05', '8:21', '8:34', '8:45',
-    '9:05', '14:05', 
-    '15:05', '15:35', '15:58',
-    '16:05', '16:20', '16:35', '16:58',
-    '17:05', '17:20', '17:35', '17:58',
-    '18:05', '18:20'
-]
 
 cut_id_converter = get_id_cut_number_converter(NEWS_FILE)
 
-
+# tests done
 # main
 def get_time_to_cutid_converter(input_file_news, input_file_newscasts):
 
@@ -83,16 +54,17 @@ def merge_show_dicts(meta_dict):
                 out_dict[day] = day_dict
     return out_dict
 
-
+# tests done
 def sort_output_dict(input_dict):
+    print(input_dict)
     output_dict = {}
     for day, day_dict in input_dict.items():
         # not working somewhere here.
-        output_dict[day] = {time: day_dict.get(time) for time in full_sorted_list}
-    
+        output_dict[day] = {time: day_dict.get(time) for time in FULL_SORTED_LIST}
+    print(output_dict)
     return output_dict
 
-
+# tests done
 def date_to_string(datetime_obj):
     try:
         return datetime_obj.strftime('%d-%b')
@@ -115,7 +87,7 @@ def time_convert_whole_day(sched_dict, datetime_header, time_coumn_header='Times
     for times_et, cut_id in zip(sched_dict.get(time_coumn_header), sched_dict.get(datetime_header)):
         # converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime('%-H:%M') # Linux
         converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime('%#H:%M')
-        if converted_pacific_str in regular_funding_credits:
+        if converted_pacific_str in REGULAR_FUNDING_CREDITS:
             out_dict[converted_pacific_str] = convert_cut_id_to_cut_number(cut_id)
     return out_dict
 
@@ -199,7 +171,7 @@ def clean_newscast_dict(raw_dict):
         day_string = date_to_string(day) if type(day) is not str else day
         output_dict[day_string] = {}
         for time in day_dict:
-            if time in newscast_funding_credits:
+            if time in NEWSCAST_FUNDING_CREDITS:
                 output_dict[day_string].update({time: day_dict[time]})
 
     return output_dict
@@ -211,8 +183,8 @@ def to_pacific_time_newscasts(eastern_time):
     # convert eastern to pacific time
     return EASTERN_TIMEZONE.localize(
             converted_eastern_datetime, is_dst=None
-        # ).astimezone(PACIFIC_TIMEZONE).strftime('%-H:%M') # LInux version
         ).astimezone(PACIFIC_TIMEZONE).strftime('%#H:%M')
+        # ).astimezone(PACIFIC_TIMEZONE).strftime('%-H:%M') # Linux version
 
 """
 Sample Output for get_time_to_cutid_converter
