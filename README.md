@@ -77,5 +77,5 @@ These Environment variables should be stored in a `.env` file in ./modules/confi
     ```
     > python -m run bot
     ```
-- To trigger a new update @mention the bot's name along with one of the trigger strings. 
+- To trigger a new update `@mention` the bot's name along with one of the trigger strings. 
 - The bot will notify you when the update is complete. 
