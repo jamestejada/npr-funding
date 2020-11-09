@@ -10,7 +10,8 @@ from modules.config.settings import (
 
 cut_id_converter = get_id_cut_number_converter(NEWS_FILE)
 
-# tests done
+
+# test done
 # main
 def get_time_to_cutid_converter(input_file_news, input_file_newscasts):
 
@@ -40,7 +41,7 @@ def get_show_dict(show, input_file_news):
             each_day_str = date_to_string(each_day)
             out_dict[each_day_str] = converted_day_dict
     out_dict['SOURCE'] = {time: show for time in out_dict.get(sample_key_for_source)}
-    
+
     return out_dict
 
 
@@ -54,17 +55,16 @@ def merge_show_dicts(meta_dict):
                 out_dict[day] = day_dict
     return out_dict
 
-# tests done
-def sort_output_dict(input_dict):
-    print(input_dict)
-    output_dict = {}
-    for day, day_dict in input_dict.items():
-        # not working somewhere here.
-        output_dict[day] = {time: day_dict.get(time) for time in FULL_SORTED_LIST}
-    print(output_dict)
-    return output_dict
 
-# tests done
+# test done
+def sort_output_dict(input_dict):
+    return {
+        day: {time: day_dict.get(time) for time in FULL_SORTED_LIST}
+        for day, day_dict in input_dict.items()
+    }
+
+
+# test done
 def date_to_string(datetime_obj):
     try:
         return datetime_obj.strftime('%d-%b')
@@ -72,26 +72,25 @@ def date_to_string(datetime_obj):
         return None
 
 
+# test done
 def clean_header_list(raw_header_list: list) -> list:
     # raw_header_list is df.columns.to_list()
-    output_list = []
-    for header in raw_header_list:
-        header_parse = date_to_string(header)
-        if header_parse is not None:
-            output_list.append(header)
-    return output_list
+    return [
+        header for header in raw_header_list
+        if date_to_string(header) is not None
+    ]
 
 
-def time_convert_whole_day(sched_dict, datetime_header, time_coumn_header='Times (ET)'):
+def time_convert_whole_day(sched_dict, datetime_header, time_column_header='Times (ET)'):
     out_dict = {}
-    for times_et, cut_id in zip(sched_dict.get(time_coumn_header), sched_dict.get(datetime_header)):
-        # converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime('%-H:%M') # Linux
+    for times_et, cut_id in zip(sched_dict.get(time_column_header), sched_dict.get(datetime_header)):
         converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime('%#H:%M')
         if converted_pacific_str in REGULAR_FUNDING_CREDITS:
             out_dict[converted_pacific_str] = convert_cut_id_to_cut_number(cut_id)
     return out_dict
 
 
+# test done
 def convert_cut_id_to_cut_number(cut_id):
     return int(cut_id_converter.get(cut_id))
 
@@ -107,17 +106,14 @@ def get_one_day_dict(datetime_obj, dataframe, show, time_header='Times (ET)') ->
 PACIFIC_TIMEZONE = pytz.timezone('US/Pacific')
 EASTERN_TIMEZONE = pytz.timezone('US/Eastern')
 
-
-def to_pacific_time(
-            eastern_time: str,
-            one_day_dt: object,
-            ignore_chars=['/', 'PM', 'AM']
-            ) -> object:
+# test done
+def to_pacific_time(eastern_time: str, one_day_dt: object,
+                    ignore_chars=['/', 'PM', 'AM']
+                    ) -> object:
     """ returns a converted pacific timezone datetime object
     from a datetime representing a day and an eastern time string
     from the NPR reference spreadsheet.
     """
-
     # remove unwanted characters from eastern_datetime
     for character in ignore_chars:
         eastern_time = eastern_time.replace(character, '')
@@ -143,7 +139,6 @@ def get_newscast_dict(newscast_file):
         date_to_string(header) if not header == time_header else header 
         for header in df.columns.to_list()
         ]
-
 
     df[time_header] = df[df[time_header].str.len() == 8]
     df = df.dropna()
@@ -177,6 +172,7 @@ def clean_newscast_dict(raw_dict):
     return output_dict
 
 
+# test done
 def to_pacific_time_newscasts(eastern_time):
     converted_eastern_datetime = parse(eastern_time)
 
@@ -184,7 +180,6 @@ def to_pacific_time_newscasts(eastern_time):
     return EASTERN_TIMEZONE.localize(
             converted_eastern_datetime, is_dst=None
         ).astimezone(PACIFIC_TIMEZONE).strftime('%#H:%M')
-        # ).astimezone(PACIFIC_TIMEZONE).strftime('%-H:%M') # Linux version
 
 """
 Sample Output for get_time_to_cutid_converter

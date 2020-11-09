@@ -8,7 +8,7 @@ from modules.config.settings import (
 from modules.processing.funding_credit_schedule import (
     get_time_to_cutid_converter, convert_cut_id_to_cut_number,
     sort_output_dict, date_to_string, to_pacific_time, EASTERN_TIMEZONE,
-    to_pacific_time_newscasts
+    to_pacific_time_newscasts, clean_header_list
     )
 from tests.fixtures import (
     news_file, newscast_file, cut_id_converter, time_to_cutid_converter
@@ -86,3 +86,16 @@ def test_to_pacific_time_newscasts():
     ]
     for time, result in test_list:
         assert to_pacific_time_newscasts(time) == result
+
+
+def test_clean_header_list():
+    sample_header_list = [
+        parse('9/28/2020'),
+        parse('9/29/2020'),
+        'SOURCE'
+    ]
+    result = [
+        datetime.datetime(2020, 9, 28),
+        datetime.datetime(2020, 9, 29)
+    ]
+    assert clean_header_list(sample_header_list) == result

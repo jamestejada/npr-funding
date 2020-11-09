@@ -1,21 +1,15 @@
 import pandas as pd
 from pandas import ExcelWriter
 from dateutil.parser import parse
-from modules.config.settings import CRED_PATH, TOKEN_PATH, TARGET_SHEET
+from modules.config.settings import (
+    CRED_PATH, TOKEN_PATH, TARGET_SHEET, NEWSCAST_FUNDING_CREDITS
+    )
 
 # Google stuff
 import pickle
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-
-newscast_funding_credits = [
-    '5:05', '6:05', '7:05',
-    '8:05',
-    '9:05',
-    '14:05', 
-    '15:05', '16:05', '17:05', '18:05'
-]
 
 
 class Funding_Credit_Excel:
@@ -85,7 +79,7 @@ class Funding_Credit_Excel:
             if time == self.INSIGHT_NEWSCAST:
                 for i in range(self.max_col):
                     worksheet.write(row_number, i, self.dataframe.iloc[index, i], format_yellow)
-            elif time in newscast_funding_credits:
+            elif time in NEWSCAST_FUNDING_CREDITS:
                 for i in range(self.max_col):
                     worksheet.write(row_number, i, self.dataframe.iloc[index, i], format_green)
             else:
@@ -94,19 +88,15 @@ class Funding_Credit_Excel:
 
     
     def set_column_widths(self, worksheet):
-
         # Time Column (thinner)
         worksheet.set_column(0, 8)
-
         # Source Column (thinner)
         worksheet.set_column((self.max_col - 1), 8)
-
         # Standard columns with cut numbers
         worksheet.set_column(1, (self.max_col - 2), self.COLUMN_WIDTH)
-
         # Legend Column
         worksheet.set_column(self.legend_column, self.legend_column, self.COLUMN_WIDTH)
-    
+
     def set_row_height(self, worksheet):
         worksheet.set_row(0, 30)
         for row in range(self.max_row + self.ROW_OFFSET + 1):
@@ -140,7 +130,6 @@ class Funding_Credit_Output(Funding_Credit_Excel):
         self.week_of = self.get_first_date()
 
     def write_to_google_sheets(self):
-
         self.update_sheet_name()
 
         return self.sheet.values().update(
@@ -167,7 +156,6 @@ class Funding_Credit_Output(Funding_Credit_Excel):
 
     def get_first_date(self):
         first_datetime = parse(self.dataframe.columns.to_list()[1])
-        # return first_datetime.strftime('%-m/%-d/%y') #Linux
         return first_datetime.strftime('%#m/%#d/%y')
 
     def build_row_list(self):

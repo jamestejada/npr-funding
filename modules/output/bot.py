@@ -35,44 +35,6 @@ class Ops_Bot:
         # Decorate the message handler
         self.rtm_client.run_on(event='message')(self._message_handler)
 
-    def _connect(self):
-        response = self.web_client.rtm_connect(with_team_state=False)
-        return response.get('self').get('id')
-
-    def _introduce_yourself(self):
-        self.web_client.chat_postMessage(
-            channel=self.TARGET_CHANNEL,
-            text=self.BOT_INTRO
-        )
-
-    def start_bot(self):
-        print('Starting Ops Bot...')
-        self._introduce_yourself()
-        try:
-            self.rtm_client.start()
-        except KeyboardInterrupt:
-            print('Ops Bot Shutting Down...')
-            self._send_message(self.SHUTDOWN_MESSAGE, self.TARGET_CHANNEL)
-    
-    def run_external(self):
-        for func in self.external_functions:
-            func()
-    
-    def _send_task_confirmation(self, data):
-        user = data.get('user')
-        channel = data.get('channel')
-        confirmation_string = f"Hi <@{user}>!\nNPR Funding Credit Schedule is updated."
-        self._send_message(confirmation_string, channel)
-
-    def _send_message(self, message_text, channel):
-        return self.web_client.chat_postMessage(channel=channel, text=message_text)
-    
-    def _process_message(self, input_text: str) -> str:
-        return input_text.replace('\\xa0', '').lower()
-    
-    def _get_message_set(self, input_text: str) -> set:
-        return set(self._process_message(input_text).split())
-
     # @RTMClient.run_on(event='message')
     def _message_handler(self, **payload):
 
@@ -87,6 +49,45 @@ class Ops_Bot:
         if message_word_set.intersection(set(self.TRIGGER_STRINGS)):
             self.run_external()
             self._send_task_confirmation(data)
+
+    def start_bot(self):
+        print('Starting Ops Bot...')
+        self._introduce_yourself()
+        try:
+            self.rtm_client.start()
+        except KeyboardInterrupt:
+            print('Ops Bot Shutting Down...')
+            self._send_message(self.SHUTDOWN_MESSAGE, self.TARGET_CHANNEL)
+    
+    def run_external(self):
+        for func in self.external_functions:
+            func()
+
+    def _connect(self):
+        response = self.web_client.rtm_connect(with_team_state=False)
+        return response.get('self').get('id')
+
+    def _introduce_yourself(self):
+        self.web_client.chat_postMessage(
+            channel=self.TARGET_CHANNEL,
+            text=self.BOT_INTRO
+        )
+
+    def _send_task_confirmation(self, data):
+        user = data.get('user')
+        channel = data.get('channel')
+        confirmation_string = f"Hi <@{user}>!\nNPR Funding Credit Schedule is updated."
+        self._send_message(confirmation_string, channel)
+
+    def _send_message(self, message_text, channel):
+        return self.web_client.chat_postMessage(channel=channel, text=message_text)
+
+    def _process_message(self, input_text: str) -> str:
+        return input_text.replace('\\xa0', '').lower()
+
+    def _get_message_set(self, input_text: str) -> set:
+        return set(self._process_message(input_text).split())
+
 
 # main
 def run_bot():

@@ -20,7 +20,7 @@ sheet_ingest = {
 
 def get_id_cut_number_converter(input_file):
     """ This module returns a dictionary in which takes
-    a cut ID (for Morning Edition and Weekend Edition) as
+    a cut ID (for Morning Edition, Weekend Edition, ATC, etc.) as
     a key and returns the actual cut number
     """
     pd_file = pd.ExcelFile(input_file)
@@ -28,24 +28,31 @@ def get_id_cut_number_converter(input_file):
     converter_dict = {}
     for sheet, row_pairs in sheet_ingest.items():
         df = pd.read_excel(input_file, sheet)
-        for each_pair in row_pairs:
-            converter_dict.update(process_columns(df, *each_pair))
+        converter_dict.update(process_one_dataframe(df, row_pairs))
 
     return converter_dict
 
 
-def process_columns(dataframe, cut_id_column, cut_number_column):
+def process_one_dataframe(df, row_pair_tuples: list):
+
+    output_dict = {}
+    for each_pair in row_pair_tuples:
+        output_dict.update(process_columns(df, *each_pair))
+    return output_dict
+
+
+def process_columns(dataframe, cut_id_column: str, cut_number_column: str) -> dict:
     one_set = dataframe[[cut_id_column, cut_number_column]]
     one_set = one_set.dropna(0)
     one_set = one_set.to_dict(orient='list')
 
-    out_dict = {}
-    for seg_code, cut_no in zip(
-                            one_set.get(cut_id_column),
-                            one_set.get(cut_number_column)
-                            ):
-        out_dict[seg_code] = str(int(cut_no))
-    return out_dict
+    return {
+        seg_code: str(int(cut_no))
+        for seg_code, cut_no in zip(
+            one_set.get(cut_id_column),
+            one_set.get(cut_number_column)
+        )
+    }
 
 
 """
