@@ -53,7 +53,7 @@ These Environment variables should be stored in a `.env` file in ./modules/confi
     - Get the targeting string from the sheet url and enter it into the `.env` file.
 
 4. For Slack Integration:
-    - Create a "Classic" Slack App (This is an older API)
+    - Create a [Classic Slack App](https://slack.dev/python-slackclient/) (I know, I know...it's a legacy API)
     - After completing this process, enter the API token into the `.env` file.
 
 5. Download sample `news.xls` and `newscast.xls` spreadsheets from nprstations.org, and modify tests to match. 
