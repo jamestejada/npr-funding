@@ -14,9 +14,10 @@ This program automates the generation of an internal CapRadio spreadsheet contai
 ## Requirements
 1. Windows 10
 2. Python 3.8
-3. Credentials to nprstations.org
-3. Google Account (for sheets integration)
-4. Slack Workspace and Account (for Slack bot Integration)
+3. Google Chrome Web Browser (used by Selenium/Helium)
+4. Credentials to nprstations.org
+5. Google Account (for sheets integration)
+6. Slack Workspace and Account (for Slack bot Integration)
 
 ---
 
@@ -49,7 +50,7 @@ These Environment variables should be stored in a `.env` file in ./modules/confi
 2. Create a `.env` file in ./modules/config/ and populate with credentials listed above in the [Environment Variables](#environment-variables) section.
 
 3. For Google Sheets integration:
-    - Created a Spreadsheet in Google Sheets
+    - Create a Spreadsheet in Google Sheets
     - Get the targeting string from the sheet url and enter it into the `.env` file.
 
 4. For Slack Integration:
