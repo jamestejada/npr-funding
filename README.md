@@ -52,6 +52,7 @@ These Environment variables should be stored in a `.env` file in ./modules/confi
 3. For Google Sheets integration:
     - Create a Spreadsheet in Google Sheets
     - Get the targeting string from the sheet url and enter it into the `.env` file.
+    - The first time you run the program it will ask you to authenticate your Google account.
 
 4. For Slack Integration:
     - Create a [Classic Slack App](https://slack.dev/python-slackclient/) (I know, I know...it's a legacy API)
