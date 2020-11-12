@@ -2,7 +2,6 @@ import os
 import time
 import shutil
 import helium as he
-from selenium.webdriver.chrome.options import Options
 from modules.config.settings import (
     USER_NAME, PASSWORD, DOWNLOAD_PATH_NEWS,
     LOGIN_PAGE, CREDIT_PAGE,
@@ -58,7 +57,7 @@ def transfer_to_data(link_text, download_path):
         }.get(link_text)
     )
 
-    shutil.copy( str(download_path.absolute()), str(data_path.absolute()))
+    shutil.copy(str(download_path.absolute()), str(data_path.absolute()))
 
     print(f'{link_text} file transferred...')
 
