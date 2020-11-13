@@ -12,14 +12,14 @@ class Ops_Bot:
     "funder", "funders", "funding"
     ]
     BOT_INTRO = f"""
-    *OPS-BOT* has been activated...
+    *OPSBOT* has been activated...
 
     I can update the <https://docs.google.com/spreadsheets/d/{TARGET_SHEET}#gid=0|NPR Funding Credit Schdule> for you. 
 
-    *Just type:* `@ops-bot update NPR Funding Credit Schedule` to activate.
-    (or `@ops-bot funding`. That's much easier.)
+    *Just type:* `@opsbot update NPR Funding Credit Schedule` to activate.
+    (or `@opsbot funding`. That's much easier.)
     """
-    SHUTDOWN_MESSAGE = """*OPS-BOT* deactivated..."""
+    SHUTDOWN_MESSAGE = """*OPSBOT* deactivated..."""
     DEFAULT_EXT_FUNCS = (download_input_files, write)
 
     def __init__(self, token, external_functions=None):
@@ -47,6 +47,7 @@ class Ops_Bot:
         message_word_set = self._get_message_set(raw_message_text)
 
         if message_word_set.intersection(set(self.TRIGGER_STRINGS)):
+            self._send_message("I'm on it!")
             self.run_external()
             self._send_task_confirmation(data)
 
@@ -76,11 +77,11 @@ class Ops_Bot:
     def _send_task_confirmation(self, data):
         user = data.get('user')
         channel = data.get('channel')
-        confirmation_string = f"Hi <@{user}>!\nNPR Funding Credit Schedule is updated."
+        confirmation_string = f"OK <@{user}>!\nNPR Funding Credit Schedule is updated."
         self._send_message(confirmation_string, channel)
 
-    def _send_message(self, message_text, channel):
-        return self.web_client.chat_postMessage(channel=channel, text=message_text)
+    def _send_message(self, message_text, channel=None):
+        return self.web_client.chat_postMessage(channel=channel or self.TARGET_CHANNEL, text=message_text)
 
     def _process_message(self, input_text: str) -> str:
         return input_text.replace('\\xa0', '').lower()
