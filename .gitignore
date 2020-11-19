@@ -7,4 +7,5 @@ wenv
 .env
 .vscode
 __pycache__
+.pytest_cache
 credentials.json
