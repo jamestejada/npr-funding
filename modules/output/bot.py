@@ -7,7 +7,8 @@ from modules.output.write import write
 
 
 class Ops_Bot:
-    TARGET_CHANNEL = '#ops-robot-test'
+    # TARGET_CHANNEL = '#ops-robot-test'
+    TARGET_CHANNEL = '#operations'
     TRIGGER_STRINGS = [
     "funder", "funders", "funding"
     ]

@@ -27,7 +27,7 @@ def get_id_cut_number_converter(input_file):
 
     converter_dict = {}
     for sheet, row_pairs in sheet_ingest.items():
-        df = pd.read_excel(input_file, sheet)
+        df = pd.read_excel(pd_file, sheet)
         converter_dict.update(process_one_dataframe(df, row_pairs))
 
     return converter_dict
