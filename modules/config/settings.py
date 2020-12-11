@@ -10,10 +10,7 @@ load_dotenv(dotenv_path=ENV_PATH)
 
 
 def check_flags(flags) -> bool:
-    for arg in flags:
-        if arg in sys.argv[1:]:
-            return True
-    return False
+    return any([(arg in flags) for arg in sys.argv[1:]])
 
 
 SLACK_TOKEN = os.getenv('SLACK_TOKEN')
@@ -37,8 +34,9 @@ TOKEN_PATH = Path.cwd().joinpath('modules', 'config', 'token.pickle')
 # For NPR Stations website
 USER_NAME = os.getenv('USER')
 PASSWORD = os.getenv('PASSWORD')
-LOGIN_PAGE = os.getenv('LOGIN_PAGE')
-CREDIT_PAGE = os.getenv('CREDIT_PAGE')
+NPR_ROOT = os.getenv('NPR_ROOT')
+LOGIN_PAGE = f'{NPR_ROOT}{os.getenv("LOGIN_PAGE")}'
+CREDIT_PAGE = f'{NPR_ROOT}{os.getenv("CREDIT_PAGE")}'
 
 DOWNLOAD_FOLDER = Path('C:\\Users\\james.tejada\\Downloads')
 DOWNLOAD_PATH_NEWS = DOWNLOAD_FOLDER.joinpath('news.xls')

@@ -15,7 +15,7 @@ class Ops_Bot:
     BOT_INTRO = f"""
     *OPSBOT* has been activated...
 
-    I can update the <https://docs.google.com/spreadsheets/d/{TARGET_SHEET}#gid=0|NPR Funding Credit Schdule> for you. 
+    I can update the <https://docs.google.com/spreadsheets/d/{TARGET_SHEET}#gid=0|NPR Funding Credit Schedule> for you. 
 
     *Just type:* `@opsbot update NPR Funding Credit Schedule` to activate.
     (or `@opsbot funding`. That's much easier.)
@@ -49,7 +49,10 @@ class Ops_Bot:
 
         if message_word_set.intersection(set(self.TRIGGER_STRINGS)):
             self._send_message("I'm on it!")
-            self.run_external()
+            try:
+                self.run_external()
+            except Exception as e:
+                self._send_message(f"This is not going very well...\rERROR: {e}")
             self._send_task_confirmation(data)
 
     def start_bot(self):
