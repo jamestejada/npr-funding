@@ -45,22 +45,25 @@ These Environment variables should be stored in a `.env` file in ./modules/confi
     ```
     > environ
     ```
-    - This will create a python virtual environment and install libraries found in `requirements.txt`
+2. Install Requirements
+    ```
+    > pip install -r requirements.txt
+    ```
 
-2. Create a `.env` file in ./modules/config/ and populate with credentials listed above in the [Environment Variables](#environment-variables) section.
+3. Create a `.env` file in ./modules/config/ and populate with credentials listed above in the [Environment Variables](#environment-variables) section.
 
-3. For Google Sheets integration:
+4. For Google Sheets integration:
     - Create a Spreadsheet in Google Sheets
     - Get the targeting string from the sheet url and enter it into the `.env` file.
     - The first time you run the program it will ask you to authenticate your Google account.
 
-4. For Slack Integration:
+5. For Slack Integration:
     - Create a [Classic Slack App](https://slack.dev/python-slackclient/) (I know, I know...it's a legacy API)
     - After completing this process, enter the API token into the `.env` file.
 
-5. Download sample `news.xls` and `newscast.xls` spreadsheets from nprstations.org, and modify tests to match. 
+6. Download sample `news.xls` and `newscast.xls` spreadsheets from nprstations.org, and modify tests to match. 
 
-6. Run tests
+7. Run tests
     ```
     > python -m run tests
     ```
