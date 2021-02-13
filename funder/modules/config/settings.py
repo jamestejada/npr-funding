@@ -5,7 +5,7 @@ from pathlib import Path
 from datetime import datetime
 
 
-ENV_PATH = Path.cwd().joinpath('modules', 'config', '.env')
+ENV_PATH = Path.cwd().joinpath('funder', 'modules', 'config', '.env')
 load_dotenv(dotenv_path=ENV_PATH)
 
 
@@ -15,11 +15,12 @@ def check_flags(flags) -> bool:
 
 SLACK_TOKEN = os.getenv('SLACK_TOKEN')
 
+WRITE = check_flags(['write', 'process'])
 TESTING = check_flags(['testing', 'test', 'tests'])
 BOT_RUN = check_flags(['bot', 'app'])
 
 TEST_DATA = Path.cwd().joinpath('tests', 'data')
-TRUE_DATA = Path.cwd().joinpath('data')
+TRUE_DATA = Path.cwd().joinpath('funder', 'data')
 DATA = TEST_DATA if TESTING else TRUE_DATA
 
 NEWS_FILE = DATA.joinpath('news.xls')
@@ -28,19 +29,15 @@ now = datetime.now().strftime('%Y%m%d')
 OUTPUT_FILE = DATA.joinpath(f'output{now}.xlsx')
 
 TARGET_SHEET = os.getenv('TEST_ID' if TESTING else 'SPREADSHEET_ID')
-CRED_PATH = Path.cwd().joinpath('modules', 'config', 'credentials.json')
-TOKEN_PATH = Path.cwd().joinpath('modules', 'config', 'token.pickle')
+CRED_PATH = Path.cwd().joinpath('funder', 'modules', 'config', 'credentials.json')
+TOKEN_PATH = Path.cwd().joinpath('funder', 'modules', 'config', 'token.pickle')
 
 # For NPR Stations website
-USER_NAME = os.getenv('USER')
+USER_NAME = os.getenv('USER_NAME')
 PASSWORD = os.getenv('PASSWORD')
 NPR_ROOT = os.getenv('NPR_ROOT')
 LOGIN_PAGE = f'{NPR_ROOT}{os.getenv("LOGIN_PAGE")}'
 CREDIT_PAGE = f'{NPR_ROOT}{os.getenv("CREDIT_PAGE")}'
-
-DOWNLOAD_FOLDER = Path('C:\\Users\\james.tejada\\Downloads')
-DOWNLOAD_PATH_NEWS = DOWNLOAD_FOLDER.joinpath('news.xls')
-DOWNLOAD_PATH_NEWSCAST = DOWNLOAD_FOLDER.joinpath('newscast.xls')
 
 
 REGULAR_FUNDING_CREDITS = [

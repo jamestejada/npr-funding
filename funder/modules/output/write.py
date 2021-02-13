@@ -1,6 +1,6 @@
-from modules.processing.funding_credit_schedule import get_time_to_cutid_converter
-from modules.output.output import Funding_Credit_Output
-from modules.config.settings import NEWS_FILE, NEWSCAST_FILE, OUTPUT_FILE
+from funder.modules.processing.funding_credit_schedule import get_time_to_cutid_converter
+from funder.modules.output.output import Funding_Credit_Output
+from funder.modules.config.settings import NEWS_FILE, NEWSCAST_FILE, OUTPUT_FILE
 
 
 def write():

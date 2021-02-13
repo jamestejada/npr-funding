@@ -1,11 +1,12 @@
+import platform
 import pytest
 import datetime
 from dateutil.parser import parse
 from dateutil.parser._parser import ParserError
-from modules.config.settings import (
+from funder.modules.config.settings import (
     REGULAR_FUNDING_CREDITS, NEWSCAST_FUNDING_CREDITS, FULL_SORTED_LIST
 )
-from modules.processing.funding_credit_schedule import (
+from funder.modules.processing.funding_credit_schedule import (
     get_time_to_cutid_converter, convert_cut_id_to_cut_number,
     sort_output_dict, date_to_string, to_pacific_time, EASTERN_TIMEZONE,
     to_pacific_time_newscasts, clean_header_list
@@ -72,8 +73,11 @@ def test_to_pacific_time():
         ('21:00:00', '18:00')
     ]
 
+    strf_string = '%#H:%M' if platform.system() == 'Windows' else '%-H:%M'
+
     for time, result in test_list:
-        assert to_pacific_time(time, today).strftime('%#H:%M') == result
+        if platform.system() == 'Windows':
+            assert to_pacific_time(time, today).strftime(strf_string) == result
 
 
 def test_to_pacific_time_newscasts():

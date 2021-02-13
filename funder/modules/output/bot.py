@@ -1,9 +1,9 @@
 import os
 from slack import WebClient
 from slack import RTMClient
-from modules.config.settings import SLACK_TOKEN, TARGET_SHEET
-from modules.input.input_files import download_input_files
-from modules.output.write import write
+from funder.modules.config.settings import SLACK_TOKEN, TARGET_SHEET
+from funder.modules.input.input_files import download_input_files
+from funder.modules.output.write import write
 
 
 class Ops_Bot:
@@ -52,7 +52,7 @@ class Ops_Bot:
             try:
                 self.run_external()
             except Exception as e:
-                self._send_message(f"This is not going very well...\rERROR: {e}")
+                self._send_message(f"This is not going very well...\nERROR: {e}")
             self._send_task_confirmation(data)
 
     def start_bot(self):

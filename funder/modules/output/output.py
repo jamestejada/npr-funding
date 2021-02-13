@@ -1,7 +1,7 @@
 import pandas as pd
 from pandas import ExcelWriter
 from dateutil.parser import parse
-from modules.config.settings import (
+from funder.modules.config.settings import (
     CRED_PATH, TOKEN_PATH, TARGET_SHEET, NEWSCAST_FUNDING_CREDITS
     )
 

@@ -1,10 +1,11 @@
 from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
-from modules.config.settings import (
+from funder.modules.config.settings import (
     USER_NAME, PASSWORD, LOGIN_PAGE, CREDIT_PAGE, NPR_ROOT,
     NEWS_FILE, NEWSCAST_FILE
 )
+
 
 class Get_Spreadsheets:
     """Scrapes the NPR Stations website to download 
@@ -44,7 +45,10 @@ class Get_Spreadsheets:
             self.funding_credits_page, 'Accessing Funding Credits Page...'
             )
         href_list = self.find_links(funding_response.text)
-        assert len(href_list) == 2
+        try:
+            assert len(href_list) == 2, f'href_list is not right: {len(href_list)}'
+        except AssertionError as e:
+            print(e)
 
         for link, link_text in href_list:
             download_url = self.one_download_page(link, link_text)
@@ -56,7 +60,7 @@ class Get_Spreadsheets:
     
     def login(self):
         """Logs into NPR stations website"""
-        return self.session.get(self.LOGIN_PAGE, params=self.params, headers=self.USER_AGENT)
+        return self.session.post(self.LOGIN_PAGE, params=self.params, headers=self.USER_AGENT)
     
     def funding_credits_page(self):
         """Gets NPR funding credits page"""

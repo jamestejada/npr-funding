@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from pathlib import Path
-from modules.processing.cut_converter import (
+from funder.modules.processing.cut_converter import (
     sheet_ingest, get_id_cut_number_converter, process_columns
     )
 from tests.fixtures import news_file, full_target_data
