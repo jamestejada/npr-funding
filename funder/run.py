@@ -7,8 +7,6 @@ from funder.modules.config.settings import BOT_RUN, TESTING, WRITE
 
 # TO DO:
 #   - Clean Up Get_Spreadsheets class
-#       - Maybe create on main function within class that
-#         calls the other functions.
 #   DONE - Figure out how to keep processing even
 #     when NPR leaves blanks in their schedule. 
 #   - Maybe create classes for processing different spreadsheets. 

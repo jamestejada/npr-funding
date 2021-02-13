@@ -9,6 +9,12 @@ ENV_PATH = Path.cwd().joinpath('funder', 'modules', 'config', '.env')
 load_dotenv(dotenv_path=ENV_PATH)
 
 
+def from_cwd(*path_list):
+    directory = Path.cwd().joinpath(*path_list)
+    directory.mkdir(exist_ok=True, parents=True)
+    return directory
+
+
 def check_flags(flags) -> bool:
     return any([(arg in flags) for arg in sys.argv[1:]])
 
@@ -19,8 +25,8 @@ WRITE = check_flags(['write', 'process'])
 TESTING = check_flags(['testing', 'test', 'tests'])
 BOT_RUN = check_flags(['bot', 'app'])
 
-TEST_DATA = Path.cwd().joinpath('tests', 'data')
-TRUE_DATA = Path.cwd().joinpath('funder', 'data')
+TEST_DATA = from_cwd('tests', 'data')
+TRUE_DATA = from_cwd('data')
 DATA = TEST_DATA if TESTING else TRUE_DATA
 
 NEWS_FILE = DATA.joinpath('news.xls')
@@ -29,8 +35,9 @@ now = datetime.now().strftime('%Y%m%d')
 OUTPUT_FILE = DATA.joinpath(f'output{now}.xlsx')
 
 TARGET_SHEET = os.getenv('TEST_ID' if TESTING else 'SPREADSHEET_ID')
-CRED_PATH = Path.cwd().joinpath('funder', 'modules', 'config', 'credentials.json')
-TOKEN_PATH = Path.cwd().joinpath('funder', 'modules', 'config', 'token.pickle')
+_CONFIG_PATH = from_cwd('funder', 'modules', 'config')
+CRED_PATH = _CONFIG_PATH.joinpath('credentials.json')
+TOKEN_PATH = _CONFIG_PATH.joinpath('token.pickle')
 
 # For NPR Stations website
 USER_NAME = os.getenv('USER_NAME')

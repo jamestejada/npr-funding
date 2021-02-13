@@ -4,6 +4,10 @@ from funder.modules.config.settings import NEWS_FILE, NEWSCAST_FILE, OUTPUT_FILE
 
 
 def write():
+
+    if not NEWS_FILE.exists() or not NEWSCAST_FILE.exists():
+        return
+
     time_id_converter = get_time_to_cutid_converter(NEWS_FILE, NEWSCAST_FILE)
     
     output_df = Funding_Credit_Output(time_id_converter)
