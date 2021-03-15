@@ -11,10 +11,6 @@ from funder.modules.config.settings import (
 
 STRF_STRING = '%#H:%M' if platform.system() == 'Windows' else '%-H:%M'
 
-cut_id_converter = get_id_cut_number_converter(NEWS_FILE)
-
-
-# test done
 # main
 def get_time_to_cutid_converter(input_file_news, input_file_newscasts):
 
@@ -59,7 +55,7 @@ def merge_show_dicts(meta_dict):
     return out_dict
 
 
-# test done
+
 def sort_output_dict(input_dict):
     return {
         day: {time: day_dict.get(time) for time in FULL_SORTED_LIST}
@@ -67,7 +63,7 @@ def sort_output_dict(input_dict):
     }
 
 
-# test done
+
 def date_to_string(datetime_obj):
     try:
         return datetime_obj.strftime('%d-%b')
@@ -75,7 +71,6 @@ def date_to_string(datetime_obj):
         return None
 
 
-# test done
 def clean_header_list(raw_header_list: list) -> list:
     # raw_header_list is df.columns.to_list()
     return [
@@ -86,15 +81,15 @@ def clean_header_list(raw_header_list: list) -> list:
 
 def time_convert_whole_day(sched_dict, datetime_header, time_column_header='Times (ET)'):
     out_dict = {}
+    cut_id_converter = get_id_cut_number_converter(NEWS_FILE)
     for times_et, cut_id in zip(sched_dict.get(time_column_header), sched_dict.get(datetime_header)):
         converted_pacific_str = to_pacific_time(times_et, datetime_header).strftime(STRF_STRING)
         if converted_pacific_str in REGULAR_FUNDING_CREDITS:
-            out_dict[converted_pacific_str] = convert_cut_id_to_cut_number(cut_id)
+            out_dict[converted_pacific_str] = convert_cut_id_to_cut_number(cut_id, cut_id_converter)
     return out_dict
 
 
-# test done
-def convert_cut_id_to_cut_number(cut_id):
+def convert_cut_id_to_cut_number(cut_id, cut_id_converter):
     return int(cut_id_converter.get(cut_id))
 
 
@@ -109,7 +104,6 @@ def get_one_day_dict(datetime_obj, dataframe, show, time_header='Times (ET)') ->
 PACIFIC_TIMEZONE = pytz.timezone('US/Pacific')
 EASTERN_TIMEZONE = pytz.timezone('US/Eastern')
 
-# test done
 def to_pacific_time(eastern_time: str, one_day_dt: object,
                     ignore_chars=['/', 'PM', 'AM']
                     ) -> object:

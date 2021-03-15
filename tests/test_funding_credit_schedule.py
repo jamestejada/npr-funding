@@ -1,3 +1,4 @@
+from funder.modules.processing.cut_converter import get_id_cut_number_converter
 import platform
 import pytest
 import datetime
@@ -20,10 +21,11 @@ def test_get_time_to_cutid_converter(news_file, newscast_file, time_to_cutid_con
     assert time_to_cutid_converter == get_time_to_cutid_converter(news_file, newscast_file)
 
 
-def test_convert_cut_id_to_cut_number(cut_id_converter):
+def test_convert_cut_id_to_cut_number(cut_id_converter, news_file):
+    real_cut_id_converter = get_id_cut_number_converter(news_file)
     for cut_id in cut_id_converter:
-        assert type(convert_cut_id_to_cut_number(cut_id)) is int
-        assert int(cut_id_converter.get(cut_id)) == convert_cut_id_to_cut_number(cut_id)
+        assert type(convert_cut_id_to_cut_number(cut_id, real_cut_id_converter)) is int
+        assert int(cut_id_converter.get(cut_id)) == convert_cut_id_to_cut_number(cut_id, real_cut_id_converter)
 
 
 def test_sort_output_dict(time_to_cutid_converter):

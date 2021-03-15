@@ -32,8 +32,8 @@ class Get_Spreadsheets:
         self.params = {
             'loginUrl': False,
             'dologin': True,
-            'username': USER_NAME,
-            'password': PASSWORD
+            'username': username or USER_NAME,
+            'password': password or PASSWORD
         }
         self.session = requests.Session()
 
