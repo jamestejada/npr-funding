@@ -5,6 +5,7 @@ from funder.modules.config.settings import (
     USER_NAME, PASSWORD, LOGIN_PAGE, CREDIT_PAGE, NPR_ROOT,
     NEWS_FILE, NEWSCAST_FILE
 )
+from colorama import Fore, Style
 
 
 class Get_Spreadsheets:
@@ -106,9 +107,10 @@ class Get_Spreadsheets:
         print(print_string, end='\r')
 
         response = request_func(*args)
-        result = 'SUCCESS' if 200 == response.status_code else 'FAILED'
+        color, result = (Fore.GREEN, 'SUCCESS') if 200 == response.status_code else (Fore.RED, 'FAILED')
 
-        print(print_string, result)
+        print(print_string, end='', flush=True)
+        print(color, result, Style.RESET_ALL)
         return response
 
 
