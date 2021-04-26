@@ -7,13 +7,9 @@ from funder.modules.config.settings import BOT_RUN, TESTING, WRITE
 
 # TO DO:
 #   - Clean Up Get_Spreadsheets class
-#   DONE - Figure out how to keep processing even
-#     when NPR leaves blanks in their schedule. 
-#   - Maybe create classes for processing different spreadsheets. 
-#   DONE - Go back to Linux. NOTE: problems arose when using linux because
-#          I set an environment variable in '.env' as "USER" which ended up returning
-#          the linux user name instead of the username in '.env.' "USER_NAME" is now used
-#          to fix this.
+#   ** - Maybe create classes for processing different spreadsheets. 
+#           - It is getting hard to track functions in funding_credit_schedule.py.
+#           - Clean up 
 #   - Clean up requirements.txt
 #   - Clean up imports
 #   - Do new version of slack client
