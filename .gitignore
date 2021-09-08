@@ -10,3 +10,4 @@ wenv
 __pycache__
 credentials.json
 .pytest_cache
+*.bak

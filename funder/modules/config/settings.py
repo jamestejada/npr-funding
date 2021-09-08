@@ -37,7 +37,6 @@ OUTPUT_FILE = DATA.joinpath(f'output{now}.xlsx')
 TARGET_SHEET = os.getenv('TEST_ID' if TESTING else 'SPREADSHEET_ID')
 _CONFIG_PATH = from_cwd('funder', 'modules', 'config')
 CRED_PATH = _CONFIG_PATH.joinpath('credentials.json')
-TOKEN_PATH = _CONFIG_PATH.joinpath('token.pickle')
 
 # For NPR Stations website
 USER_NAME = os.getenv('USER_NAME')
