@@ -12,11 +12,10 @@ This program automates the generation of an internal CapRadio spreadsheet contai
 ---
 
 ## Requirements
-1. ~~Windows 10~~ Ubuntu Server 20.04
+1. Ubuntu Server 20.04
 2. Python 3.8
-3. ~~Google Chrome Web Browser (used by Selenium/Helium)~~
 4. Credentials to nprstations.org
-5. Google Account (for sheets integration)
+5. [Google Service Account](https://cloud.google.com/docs/authentication/production#create_service_account) (for sheets integration)
 6. Slack Workspace and Account (for Slack bot Integration)
 
 ---
@@ -26,17 +25,18 @@ This program automates the generation of an internal CapRadio spreadsheet contai
 These Environment variables should be stored in a `.env` file in ./modules/config/
 
 ### NPR Stations Website Credentials
-- ```USER_NAME={```Username```}```
-- ```PASSWORD={```Password```}```
-- ```LOGIN_PAGE={```Login URL```}```
-- ```CREDIT_PAGE={```Funding Credits Page URL```}```
+- `USER_NAME={Username}`
+- `PASSWORD={Password}`
+- `NPR_ROOT={Root_URL}`
+- `LOGIN_PAGE={Login_URL}`
+- `CREDIT_PAGE={Funding_Credits_Page_URL}`
 
 ### Slack Credentials
-- ```SLACK_TOKEN={```Slack Token from Legacy API```}```
+- `SLACK_TOKEN={Token_from_Legacy_API}`
 
 ### Google Sheets
-- ```SPREADSHEET_ID={```Google Sheets ID String```}```
-- ```TEST_ID={```Google Sheets ID String```}```
+- `SPREADSHEET_ID={Google_Sheets_ID_String}`
+- `TEST_ID={Google_Sheets_ID_String}`
 
 ----
 
@@ -75,7 +75,7 @@ These Environment variables should be stored in a `.env` file in ./modules/confi
     ```
 
 ### Running Slack Bot
-- Execute `run.py` with a `bot` flag
+- Execute `fund` with a `bot` flag
     ```
     $ . fund bot
     ```
